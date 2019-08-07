@@ -1,0 +1,1 @@
+Server users: [{"username":"user","email":"user@mixtape.com","password":"password","admin":false,"firstName":"Normal","lastName":"User","_id":"h5Cckvc4tCpUgxbC"},{"username":"admin","email":"admin@mixtape.com","password":"password","admin":true,"firstName":"Admin","lastName":"User","_id":"pPpDspG8tBdSiwTE"}]

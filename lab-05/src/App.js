@@ -10,23 +10,41 @@ import ProjectsDetail from './projects/ProjectsDetail';
 import TimesheetsDetail from './timesheets/TimesheetsDetail';
 import EmployeeDetail from './employees/EmployeeDetail';
 import TimeunitsDetail from './timeunits/TimeunitsDetail';
+import { connect } from 'react-redux';
+import * as AuthActions from './actions/AuthActionCreator';
+import LoginForm from './login/LoginForm';
 
 class App extends React.Component {
   render() {
+    const { loginError, user, login, logout } = this.props;
+
     return (
       <BrowserRouter>
         <div className="App">
-          <Navigation />
+          <Navigation onLogout={logout} />
           <div className="container">
-            <Switch>
-              <Route exact path="/projects" component={Projects} />
+            {!user ? (
+              <LoginForm onLogin={login} loginError={loginError} />
+            ) : (
+              <Switch>
+                <Route exact path="/projects" component={Projects} />
+                <Route exact path="/projects/detail/:_id?" component={ProjectsDetail} />
 
-              <Route exact path="/employees" component={Employees} />
+                <Route exact path="/employees" component={Employees} />
+                <Route exact path="/employees/detail/:_id?" component={EmployeeDetail} />
 
-              <Route exact path="/timesheets" component={Timesheets} />
+                <Route exact path="/timesheets" component={Timesheets} />
+                <Route exact path="/timesheets/detail/:_id?" component={TimesheetsDetail} />
 
-              <Redirect to="/employees" />
-            </Switch>
+                <Route
+                  exact
+                  path="/timesheets/detail/:timesheet_id/timeunits/detail/:_id?"
+                  component={TimeunitsDetail}
+                />
+
+                <Redirect to="/employees" />
+              </Switch>
+            )}
           </div>
         </div>
       </BrowserRouter>
@@ -34,4 +52,14 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  user: state.auth.user,
+  loginError: state.auth.error
+});
+
+const mapDispatchToProps = {
+  login: AuthActions.login,
+  logout: AuthActions.logout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

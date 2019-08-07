@@ -1,8 +1,15 @@
 import React from 'react';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Button, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import * as AuthActions from '../actions/AuthActionCreator';
+import { connect } from 'react-redux';
 
 class Navigation extends React.Component {
+  logout = () => {
+    this.props.logout();
+  };
+
   render() {
     return (
       <Navbar>
@@ -16,9 +23,25 @@ class Navigation extends React.Component {
           <NavItem><NavLink to="/employees">Employees</NavLink></NavItem>
           <NavItem><NavLink to="/timesheets">Timesheets</NavLink></NavItem>
         </Nav>
+        <Nav pullRight>
+          <NavItem>
+            <Button onClick={this.logout}>Logout</Button>
+          </NavItem>
+        </Nav>
       </Navbar>
     );
   }
 }
 
-export default Navigation;
+Navigation.propTypes = {
+  logout: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+});
+
+const mapDispatchToProps = {
+  logout: AuthActions.logout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

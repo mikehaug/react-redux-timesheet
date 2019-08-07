@@ -8,7 +8,7 @@ describe('<ProjectTable />', () => {
   let wrapper;
 
   beforeEach(() => {
-    const projects = [{ _id: 1 }, { _id: 2 }];
+    const projects = [{}, {}];
     wrapper = shallow(<ProjectTable projects={projects} />);
   });
 

@@ -23,7 +23,7 @@ export const listProjects = () => {
         console.log('Error attempting to retrieve projects.', error);
       });
   };
-}
+};
 
 export const getProject = id => {
   return dispatch => {
